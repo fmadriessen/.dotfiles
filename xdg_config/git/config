@@ -1,0 +1,27 @@
+[init]
+	defaultBranch = main
+
+[user]
+	# User configuration is in $XDG_CONFIG_HOME/git/user
+
+[include]
+	path = ~/.config/git/user
+
+[core]
+    pager = delta
+
+[interactive]
+    diffFilter = delta --color-only
+
+[delta]
+    navigate = true
+    side-by-side = true
+    syntax-theme = base16
+
+[merge]
+    conflictstyle = diff3
+
+[diff]
+    colorMoved = default
+[alias]
+	unstage = restore --staged
