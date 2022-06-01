@@ -6,4 +6,4 @@
 --pager="less --RAW-CONTROL-CHARS --quit-if-one-screen"
 
 # Syntax mappings: map a certain filename pattern to a language.
---map-syntax ".ignore:gitignore"
+--map-syntax ".ignore:Git Ignore"
