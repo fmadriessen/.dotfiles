@@ -1,0 +1,58 @@
+# vim: set fdm=marker:
+# Configuration for the LF file manager
+
+# Warn about nested instances
+%[ $LF_LEVEL -eq 1 ] || echo -e "\033[0;31m Warning: Nested instances\033[0m"
+
+# View
+set drawbox
+set scrolloff 5
+set icons
+set dircounts
+
+# Mappings {{{
+
+map <enter> open
+map D delete
+map <c-z> $ kill -STOP $PPID
+
+# Toggle previewer
+map zp set preview!
+
+# }}}
+
+# Commands {{{
+# Custom open similar to using rifle/mailcap
+cmd open ${{
+    case $(file --brief --dereference --mime-type $f) in
+        text/*) $EDITOR $fx;;
+        *) for f in $fx; do setsid xdg-open $f >/dev/null 2>&1 & done;;
+    esac
+}}
+
+# Asynchronous paste
+cmd paste &{{
+    set -- $(cat ~/.local/share/lf/files)
+    mode="$1"
+    shift
+    case "$mode" in
+        copy)
+            rsync -av --ignore-existing --progress -- "$@" . |
+            stdbuf -i0 -o0 -e0 tr '\r' '\n' |
+            while IFS= read -r line; do
+                lf -remote "send $id echo $line"
+            done
+            ;;
+        move)
+            mv -n -- "$@" .
+            ;;
+    esac
+    rm ~/.local/share/lf/files
+    lf -remote "send clear"
+}}
+# }}}
+
+# Previews {{{
+set previewer ~/.config/lf/previewer.bash
+set cleaner ~/.config/lf/cleaner.sh
+# }}}

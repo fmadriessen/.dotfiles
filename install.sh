@@ -11,6 +11,11 @@ PROG_LIST=(
 	hyperfine
 	fzf
 	fd
+	lf
+
+	# Dependencies for lf
+	poppler
+	ffmpegthumbnailer
 
 	# LSPs, formatters, and linters
 	bash-language-server
