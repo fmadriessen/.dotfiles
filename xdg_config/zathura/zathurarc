@@ -1,0 +1,10 @@
+# synctex-editor-command is set when opening using TexLab from NVIM
+set synctex true
+
+set selection-clipboard clipboard
+
+map gO toggle_index
+map go toggle_index
+
+set window-title-home-tilde true
+set statusbar-home-tilde true
